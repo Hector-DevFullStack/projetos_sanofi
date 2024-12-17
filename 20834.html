@@ -1,0 +1,1367 @@
+
+<custom name="opencounter" type="tracking"/>
+%%[ SET @utm_campaign = __AdditionalEmailAttribute1 ]%%
+%%[ SET @utm_source = __AdditionalEmailAttribute2 ]%%
+
+
+
+%%[set @SubscriberKey = _subscriberkey]%%
+%%[set @EventDate = GetSendTime()]%%
+%%[set @View_Link = view_email_url]%%
+%%[set @Email_Id = _emailid]%%
+%%[set @Email_Name = emailname_]%%
+%%[set @Email_Log = emailaddr]%%
+
+
+%%[endif]%%
+
+%%[set @rows = LookupRows("ENT.PROD_BRA_Metadata","CampaignCode",@Utm_Campaign)
+set @rowCount = rowcount(@rows)
+if @rowCount == 0 then
+RaiseError('This campaign Code is not listed', false)
+endif]%%
+
+%%[set @rows = LookupRows("ENT.PROD_BRA_Metadata","ExposureCode", @utm_source)
+set @rowCount = rowcount(@rows)
+if @rowCount == 0 then
+RaiseError('This exposure Code is not listed', false)
+endif]%%
+
+
+%%[
+if empty(__AdditionalEmailAttribute2) OR empty(__AdditionalEmailAttribute1)  then
+
+
+RaiseError('Ops, looks like you missed Campaign code or Exposure Code!', false)
+
+else 
+
+set @combinationCount = LookupOrderedRows("ENT.PROD_BRA_Metadata",0,"CampaignCode asc","CampaignCode",@utm_campaign,"ExposureCode", @utm_source)
+set @countOfCombo=rowcount(@combinationCount)
+
+if @countOfCombo ==0 then
+RaiseError('The combination of campaign code and exposure code entered is incorrect', false)
+endif
+
+
+endif]%%
+%%[ SET @countryCode = 'BR'
+      SET @language = 'BR'
+      SET @email = [Email Address]
+      SET @subKey = AttributeValue("_subscriberkey")
+      SET @jobID = [jobid]
+      SET @subID =  AttributeValue("subscriberid")
+      SET @memberID =  AttributeValue("memberid")
+
+ SET @url = CloudPagesURl(193,'countryCode',@countryCode,'email',@email,'subscriberkey',@subKey,'jobid',@jobID,'language',@language,'subID',@subID,'memberID',@memberID) ]%%
+<!-----Start--Privacy Link goes here----->  
+%%[ 
+/*pre-configured do not touch*/
+set @HeaderValues='Basic d3BycWY0cmNmbjUzYnZnZHdyNnZkcnJuazM2ZnphbXc6cDI4NXl1cWVyM3lwZ3ljY3Jkd3NmMmJoNmVuMmNjZGg='
+set @EndPoint='https://sanofi.eu.janraincapture.com'
+/*Marketers need to configure*/
+set @ClientId='g74wyvmhgttpwzsn84sr73288rcqvzny'
+set @RedirectUri='https://www.sanoficonecta.com.br/campanha/imroz-2024?utm_id=&utm_source_platform='
+set @Website='https://www.sanoficonecta.com.br'
+set @LifeTime='604800'
+]%%
+<!-- Extra UTM Parameters | Start --> 
+%%[ 
+
+set @Sanofi_ID = [Sanofi_ID] 
+set @Account_ID = [Account_ID] 
+
+if (Empty(@Sanofi_ID) or Empty(@Account_ID)) then RaiseError("Your target is not based on Veeva_Profiles, kindly check again!", false) else 
+
+set @utms = concat('&utm_hcpid=', @Sanofi_ID, '&actid=', @Account_ID, '&Q_Language=PT', '&Function=Medical', '&Channel=HQ-Email', '&Test=Yes', '&Speciality=Cardiology', '&ContentType=Educational') 
+
+/* NOTE: Please change the @Function to Medical or Commercial. Remove the @Test parameter if you are not testing Change the @Speciality and @Content Type as nessesary */ endif 
+
+]%% 
+<!-- Extra UTM Parameters | End -->
+<a alias="Deeplink" href="%%=RedirectTo(@UnsubscribeUrl)=%%">
+%%=v(@UnsubLinkName)=%%
+<br>
+<!-----update link encoding id here-----> 
+%%=ContentBlockbyId("1655")=%%
+<!-----END---Privacy Link goes here----->  
+<a href="%%=v(@redirectURL)=%%"></a> 
+<!-----Start--Privacy Link goes here----->
+<!-----Update Client for Prod----->
+%%[
+
+SET @SubscriberKey = _subscriberkey
+SET @Country=LookUp("Veeva_Profiles","Country","Subscriber_Key",@SubscriberKey)
+SET @Language=LookUp("Veeva_Profiles","Language","Subscriber_Key",@SubscriberKey)
+SET @UnsubLinkName='Cancelar Inscrição'
+
+set @RedirectUri=LookUp("CPCCountryConfig","RedirectUrl","Country",@Country)
+set @ClientId=LookUp("CPCCountryConfig","ClientId","Country",@Country)
+SET @Website=LookUp("CPCCountryConfig","Website","Country",@Country)
+
+set @CountryCode='BR'
+]%%
+<!-----update link encoding id here----->
+%%=ContentBlockbyId("72553")=%%
+
+<!-----END---Privacy Link goes here----->
+
+
+
+
+<!doctype html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+  <head>
+    <title> </title>
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="DASCM-3550 | 16/07/2024 | 445">
+    <style type="text/css">
+      #outlook a {
+        padding: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      table,
+      td {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      p {
+        display: block;
+        margin: 13px 0;
+      }
+    </style>
+    <!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]-->
+    <!--[if lte mso 11]>
+    <style type="text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+    <style type="text/css">
+      @media only screen and (min-width:480px) {
+        .mj-column-per-100 {
+          width: 100% !important;
+          max-width: 100%;
+        }
+
+        .mj-column-per-7 {
+          width: 7% !important;
+          max-width: 7%;
+        }
+
+        .mj-column-per-93 {
+          width: 93% !important;
+          max-width: 93%;
+        }
+
+        .mj-column-per-14-285714285714286 {
+          width: 14.285714285714286% !important;
+          max-width: 14.285714285714286%;
+        }
+
+        .mj-column-per-50 {
+          width: 50% !important;
+          max-width: 50%;
+        }
+      }
+    </style>
+    <style media="screen and (min-width:480px)">
+      .moz-text-html .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .moz-text-html .mj-column-per-7 {
+        width: 7% !important;
+        max-width: 7%;
+      }
+
+      .moz-text-html .mj-column-per-93 {
+        width: 93% !important;
+        max-width: 93%;
+      }
+
+      .moz-text-html .mj-column-per-14-285714285714286 {
+        width: 14.285714285714286% !important;
+        max-width: 14.285714285714286%;
+      }
+
+      .moz-text-html .mj-column-per-50 {
+        width: 50% !important;
+        max-width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width:480px) {
+        table.mj-full-width-mobile {
+          width: 100% !important;
+        }
+
+        td.mj-full-width-mobile {
+          width: auto !important;
+        }
+      }
+    </style>
+    <style type="text/css">
+      ol li::marker {
+        font-weight: bold;
+      }
+
+      @media only screen and (max-width: 480px) {
+        .logo01 td {
+          width: 130px !important;
+        }
+
+        td .logo01 {
+          padding: 30px 0px !important;
+        }
+
+        .text div {
+          font-size: 14px !important;
+          line-height: 20px !important;
+        }
+
+        td .text {
+          padding: 30px 0px !important;
+        }
+
+        td.button-conecta {
+          padding: 30px 0px !important;
+        }
+
+        td.button-conecta table {
+          width: 180px !important;
+        }
+
+        td.button-conecta a {
+          font-size: 14px !important;
+          line-height: 24px !important;
+          width: 180px !important;
+        }
+
+        td.button-conecta a span {
+          font-size: 18px !important;
+          line-height: 24px !important;
+        }
+
+        td.rating-title {
+          padding: 30px 18px 10px !important;
+        }
+
+        .rating-title div {
+          font-size: 16px !important;
+          line-height: 20px !important;
+        }
+
+        td.rating-text {
+          padding: 0px 18px !important;
+        }
+
+        .rating-text div {
+          font-size: 14px !important;
+          line-height: 20px !important;
+        }
+
+        div.rating-section>table>tbody>tr>td {
+          padding: 20px 20px 30px !important;
+        }
+
+        td.rating-image img {
+          width: 34px !important;
+          margin: auto !important;
+        }
+
+        td.bula div {
+          font-size: 10px !important;
+          line-height: 16px !important;
+        }
+
+        td.bula {
+          padding: 30px 0px !important;
+        }
+
+        td .references {
+          padding: 30px 0px !important;
+        }
+
+        .divider {
+          padding: 30px 0px 20px !important;
+        }
+
+        .footer-section>table>tbody>tr>td {
+          padding: 10px 10px 30px !important;
+        }
+
+        td .footer-column {
+          width: 100% !important;
+        }
+
+        .footer-column td {
+          padding: 6px 0px !important;
+        }
+
+        .footer-column div {
+          font-size: 12px !important;
+          line-height: 18px !important;
+        }
+
+        .text-footer-right div {
+          text-align: left !important;
+        }
+
+        tr.icons-social>td {
+          padding-right: 10px !important;
+        }
+
+        td.social-content {
+          padding: 10px 0px 20px !important;
+        }
+
+        .logo-footer td {
+          width: 130px !important;
+        }
+
+        td .logo-footer {
+          padding: 16px 0px 20px !important;
+        }
+      }
+
+      @media only screen and (max-width: 280px) {
+        td.rating-image img {
+          width: 28px !important;
+        }
+      }
+
+
+
+      .referencia{
+        color: #888;
+        font-family: Arial;
+        font-size: 8px;
+        font-style: normal;
+        line-height: normal;
+      }
+
+      
+      .column {
+        flex: 1; 
+      }
+    
+
+       
+
+    </style>
+  </head>
+
+  <body style="word-spacing:normal;background-color:#f7f7f7;">
+    <div style="background-color:#f7f7f7;" lang="pt-br">
+
+                  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#EFEFEF"><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+                    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+                      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+                        <tbody>
+                          <tr>
+                            <td style="border:0px;direction:ltr;font-size:0px;padding:10px;text-align:center;background-color:#ffffff;">
+                              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:580px;"><![endif]-->
+                              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                  <tbody>
+                                    <tr>
+                                      <td style="border:0px;vertical-align:top;padding:0px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                          <tbody>
+                                            <tr>
+                                              <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div style="font-family:Arial, sans-serif;font-size:10px;line-height:1;text-align:center;color:#000000;">
+                                                  <a href="%25@%20include%20view='MirrorPageUrl'%20%25" style="color: #3e37ef;">Visualizar no navegador</a>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <!--[if mso | IE]></td></tr></table><![endif]-->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#f7f7f7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:top;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="left" class="logo01" style="font-size:0px;padding:40px 18px;word-break:break-word;">
+                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="width:157px;">
+                                          <img alt="Logo Conecta Sanofi" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/1372cf45-2dc6-4f5a-bf4e-95bae2d88628.png" style="border:0px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="157" />
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#f7f7f7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:top;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
+                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="width:600px;">
+                                           <a href="https://www.sanoficonecta.com.br/campanha/imroz-2024?utm_id=&utm_source_platform=&utm_source=email&utm_medium=newsletter&utm_campaign=news-imroz&utm_content=newsletter-imroz-136&utm_term=" target="_blank"><img alt="Banner" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/4946103f-bafc-463b-93bf-4a0ae75a685c.gif" style="border:0px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600" /></a> 
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      
+         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#f7f7f7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+          <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+              <tbody>
+                <tr>
+                  <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                          <tr>
+                            <td style="border:0px;vertical-align:top;padding:0px;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td align="left" class="text" style="font-size:0px;padding:0px 18px 18px;word-break:break-word;">
+                                      <div style="color: #202020; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 700; line-height: normal;">
+                                        <b>Olá, Dr.(a) %%FirstName%% %%LastName%%! Tudo bem?</b>
+                                        
+                                      </div>
+                                      
+                                      <div style="color: #202020; font-family: Arial; font-size: 14px; font-style: normal; font-weight: 400; line-height: 19px;">
+                                       
+                                        <br>
+                                          SARCLISA® (Isatuximabe) agora está APROVADO em uma nova indicação, em 
+                                          combinação com o atual standard-of-care VRd (bortezomibe, lenalidomida e 
+                                          dexametasona), oferecendo uma opção adicional de tratamento para pacientes
+                                           com mieloma múltiplo recém-diagnosticados inelegíveis ao transplante ou sem 
+                                           intenção de TACT inicial<span style="font-size: 9.333px; vertical-align: super;">1</span>.
+                                      </div>
+                                      </div>
+    
+                                      <div style="color: #202020; font-family: Arial; font-size: 14px; font-style: normal; font-weight: 400; line-height: 19px;">
+                                        <br>
+                                          <b>IsaVRd é a primeira e única terapia APROVADA</b> de um anti-CD38+VRd com <br>
+                                          dados de fase 3 indicado para o tratamento de pacientes com mieloma múltiplo <br>
+                                          ativo recém-diagnosticado que não são elegíveis para transplante autólogo de <br>
+                                          células-tronco (TACT) ou sem intenção de TACT como terapia inicial<span style="font-size: 9.333px;vertical-align: super;">1,2</span>. <br>
+                                      </div>
+
+                                      <div style="color: #202020; font-family: Arial; font-size: 14px; font-style: normal; font-weight: 400; line-height: 19px;">
+                                        <br>
+                                          Os resultados de eficácia, respostas profundas e segurança foram demonstrados <br>
+                                          através do estudo de fase 3 IMROZ, comparando a eficácia de IsaVRd vs VRd,<br>
+                                           que demonstrou uma SLP superior ao VRd (mediana não alcançada vs 54.3 <br>
+                                           meses no grupo VRd) em um acompanhamento de 60 meses<span style="font-size: 9.333px;vertical-align: super;">2,3</span>.
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>                          
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+
+             
+<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#623BAF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#f7f7f7;background-color:#f7f7f7;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#f7f7f7;background-color:#f7f7f7;width:100%;">
+      <tbody>
+        <tr>
+          <td style="border:0px;direction:ltr;font-size:0px;padding:40px 4px;text-align:center;">
+            
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="border:0px;vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                        <tbody>
+                          <tr>
+                            <td style="width:600px; padding-left:40px; padding-right:40px;  ">
+                              <img alt="Gráfico" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/be58fd33-20c6-400d-81bd-b80e5d7585e1.png" style="border:0px;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+<!--[if mso | IE]>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="width:600px;">
+  <tr>
+    <td style="padding: 0;">
+<![endif]-->
+<div class="background-container" style="background-position: center top; background-color: #FFF; height: auto; margin: 0 auto; max-width: 600px; width: 100%; position: relative;">
+
+  <div style="display: flex; align-items: center; max-width: 600px; margin: auto; position: relative; z-index: 3;">
+    <img src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/8675ab2f-1a2b-4be7-8f3a-61100a10f0d0.png" alt="Ícone" style="width: 140px; height: 120px; max-width: 140px; max-height: 120px; margin-right: 15px; position: relative; z-index: 4;">
+    <p style="position: relative; z-index: 3; padding: 20px;">
+      <span style="color: #212F5A; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 400; line-height: normal;">SARCLISA® apresenta dados</span>
+      <span style="color: #F26E5E; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 700; line-height: normal;"> robustos e consistentes em todas as combinações aprovadas:</span>
+    </p>
+  </div>
+
+  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" class="table-container" style="position: relative; z-index: 2; width: 100%; max-width: 600px; margin: auto; margin-top: -40px;">
+    <tr>
+      <td align="left" style="padding: 0em 4% 0em;">
+        <div class="columns-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px;">
+          <div class="box" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between; align-items: center; padding: 20px; color: #fff; background-color: #EC655E; border: 5px solid white; width: 100%; max-width: 100%; box-sizing: border-box;">
+            <div class="text" style="width: 60%; padding-right: 15px;">
+              <h3 style="margin: 0 0 10px; font-size: 1.2em; color: #FFF; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 700; line-height: 16px;">Estudo IKEMA (MMRR)<sup style="color: #FFF; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">3</sup></h3>
+              <p style="margin: 0; font-size: 0.9em; color: #FFF; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">O Isa-VRd resultou em uma redução estatisticamente significativa no risco de progressão ou morte em 40,4% e respostas profundas consistentes em relação ao VRd.</p>
+            </div>
+            <table role="presentation" style="width: 100%; max-width: 115px; height: 38px; margin: 10px auto;">
+              <tr>
+                <td style="background-color: #212F5A; text-align: center; width: 100%;">
+                  <a href="https://www.sanoficonecta.com.br/campanha/imroz-2024?utm_id=&utm_source_platform=&utm_source=email&utm_medium=newsletter&utm_campaign=news-imroz&utm_content=newsletter-imroz-136&utm_term=" target="_blank" style="color: #FFF; font-family: Arial; font-size: 14.516px; font-style: normal; font-weight: 700; line-height: normal; text-decoration: none;">Confira</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="left" style="padding: 0em 4% 0em;">
+        <div class="columns-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px;">
+          <div class="box" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between; align-items: center; padding: 20px; color: #fff; background-color: #212F5A; border: 5px solid white; width: 100%; max-width: 100%; box-sizing: border-box;">
+            <div class="text" style="width: 60%; padding-right: 15px;">
+              <h3 style="margin: 0 0 10px; font-size: 1.2em; color: #FFF; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 700; line-height: 16px;">Estudo IKEMA (MMRR)<sup style="color: #FFF; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">4</sup></h3>
+              <p style="margin: 0; font-size: 0.9em; color: #FFF; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">IsaKd apresentou a SLP mais longa observada até o momento em um estudo de fase 3*</p>
+            </div>
+            <table role="presentation" style="width: 100%; max-width: 115px; height: 38px; margin: 10px auto;">
+              <tr>
+                <td style="background-color: #EC655E; text-align: center;  width: 100%;">
+                  <a href="https://www.sanoficonecta.com.br/artigos/ikema?utm_id=&utm_source_platform=email&utm_source=email&utm_medium=newsletter&utm_campaign=news-imroz&utm_content=news-ikema-145&utm_term=" target="_blank" style="color: #FFF; font-family: Arial; font-size: 14.516px; font-style: normal; font-weight: 700; line-height: normal;text-decoration: none;">Confira</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="left" style="padding: 0em 4% 0em; background-color: #ffffff;">
+        <div class="columns-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px;">
+          <div class="box" style="display: flex;flex-wrap: wrap; flex-direction: row; justify-content: space-between; align-items: center; padding: 20px; color: #fff; background-color: #76A4C6; border: 5px solid white; width: 100%; max-width: 100%; box-sizing: border-box;">
+            <div class="text" style="width: 60%; padding-right: 15px;">
+              <h3 style="margin: 0 0 10px; font-size: 1.2em; color: #FFF; font-family: Arial; font-size: 16px; font-style: normal; font-weight: 700; line-height: 16px;">Estudo ICARIA (MMRR)<sup style="color: #FFF; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">5</sup></h3>
+              <p style="margin: 0; font-size: 0.9em; color: #ffffff; font-family: Arial; font-size: 12px; font-style: normal; font-weight: 400; line-height: 14px;">40% de redução no risco de progressão da doença ou morte em pacientes recebendo Isa+Pd vs Pd.</p>
+            </div>
+            <table role="presentation" style="width: 100%; max-width: 115px; height: 38px; margin: 10px auto;">
+              <tr>
+                <td style="background-color: #212F5A; text-align: center;  width: 100%;">
+                  <a href="https://www.sanoficonecta.com.br/artigos/estudo-icaria-atualizado?utm_id=&utm_source_platform=email&utm_source=email&utm_medium=newsletter&utm_campaign=news-imroz&utm_content=news-icaria-114&utm_term=" target="_blank" style="color: #ffffff; font-family: Arial; font-size: 14.516px; font-style: normal; font-weight: 700; line-height: normal;text-decoration: none;">Confira</a> 
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <!--76A4C6-->
+    <tr>
+      <td align="center" style="background-color: #ffffff;">
+        <p style="color: #212F5A; text-align: center; font-family: Arial; font-size: 8px; font-style: italic; font-weight: 400; line-height: normal;">
+          *Em um esquema terapêutico com base em inibidor de proteassoma no tratamento do mieloma múltiplo recidivado.
+        </p>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+  <style>
+    @media (max-width: 450px) {
+      .text {
+        width: 100% !important;
+      }
+    }
+  </style>
+
+<!--[if mso | IE]>
+    </td>
+  </tr>
+</table>
+<![endif]-->
+
+
+
+
+
+
+
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#f7f7f7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:top;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="left" class="text" style="font-size:0px;padding:0px 18px 25px;word-break:break-word; margin-top: 20px;">
+                                  <div style="font-family:Arial, sans-serif;font-size:16px;line-height:24px;text-align:left;color:#202020;"><mj-text css-class="text" font-family="Arial, sans-serif" color="#202020" font-size="16px" line-height="24px" padding="40px 18px 30px" align="left"> 
+                                    <br>
+                                      Até mais!<br>
+                                    <b>Equipe Sanofi</b>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+  
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ECE8F2" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#ADCBF4;background-color:#ADCBF4;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ADCBF4;background-color:#ADCBF4;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+                <div style="margin:0px auto;max-width:600px;">
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;direction:ltr;font-size:0px;padding:0px;text-align:center;">
+                          <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                          <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td style="border:0px;vertical-align:top;padding:0px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                      <tbody>
+                                        <tr>
+                                          <td align="left" class="rating-title" style="font-size:0px;padding:30px 38px 16px;word-break:break-word;">
+                                            <div style="font-family:Arial, sans-serif;font-size:18px;font-weight:bold;line-height:24px;text-align:left;color:#202020;">Pesquisa de satisfação:</div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td align="left" class="rating-text" style="font-size:0px;padding:0px 38px;word-break:break-word;">
+                                            <div style="font-family:Arial, sans-serif;font-size:16px;line-height:24px;text-align:left;color:#202020;">Dê uma nota para a relevância do conteúdo deste e-mail (sendo 1 <br> nada relevante e 7 muito relevante):</div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!--[if mso | IE]></td></tr></table><![endif]-->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="rating-section-outlook" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="rating-section-outlook" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+                <div class="rating-section" style="margin:0px auto;max-width:600px;">
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;direction:ltr;font-size:0px;padding:40px 60px 30px;text-align:center;">
+                          <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:480px;" ><![endif]-->
+                          <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;">
+                            <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=1" target="_blank">
+                                                        <img alt="Nota 1" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/a3c213c8-4b4c-4798-9b94-a195e4f1fff9.png" style="border:0px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=2" target="_blank">
+                                                        <img alt="Nota 2" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/03400409-387d-4383-9b39-d2a4ed3cf8dd.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=3" target="_blank">
+                                                        <img alt="Nota 3" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/a64517a1-1257-4791-afee-59ccaba9cb6b.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=4" target="_blank">
+                                                        <img alt="Nota 4" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/9acbbe70-a147-4e78-a4d5-87667d72b8dc.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=5" target="_blank">
+                                                        <img alt="Nota 5" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/724c3db8-fcc1-47fc-86e4-24ecc19e3313.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=6" target="_blank">
+                                                        <img alt="Nota 6" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/7b1589f8-9c46-4b29-ba7f-fa96ac3c0295.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr> 
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td><td style="vertical-align:top;width:68px;" ><![endif]-->
+                            <div class="mj-column-per-14-285714285714286 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:14%;">
+                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="border:0px;vertical-align:top;padding:0px;">
+                                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" class="rating-image" style="font-size:0px;padding:0px;word-break:break-word;">
+                                              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="width:48px;">
+                                                      <a href="https://sanofidigital.iad1.qualtrics.com/jfe/form/SV_1Bp1HEewxrBQEku?R=7" target="_blank">
+                                                        <img alt="Nota 7" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/2318de5b-54ad-4759-b758-ee19fc9bccb9.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="48" />
+                                                      </a>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <!--[if mso | IE]></td></tr></table><![endif]-->
+                          </div>
+                          <!--[if mso | IE]></td></tr></table><![endif]-->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#f7f7f7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+  <div style="background:#f7f7f7;margin:0px auto;max-width:600px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#f7f7f7;width:100%;">
+      <tbody>
+        <tr>
+          <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+            <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                  <tr>
+                    <td style="border:0px;vertical-align:top;padding:0px;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                        <tbody>
+                          <tr>
+                            <td align="left" class="text" style="font-size:0px;padding:20px 18px 15px;word-break:break-word;">
+                              <div style="font-family:Arial, sans-serif;font-size:8px;line-height:normal;text-align:left;color:#888;">
+                                <span class="referencia">Para acessar número de registro, indicações, contraindicações, interações medicamentosas e reações adversas acesse a bula de SARCLISA® em:
+                                  <a class="referencia" href="https://www.sanoficonecta.com.br/produtos/biologico/sarclisa" target="_blank"> https://www.sanoficonecta.com.br/produtos/biologico/sarclisa</a></span> <br><br>
+                               
+                                <span class="referencia"> Referências: </span><br><br>
+                                
+                                <span class="referencia">1. Diário Oficial da União de 04/11/2024 - Edição nº 213 - Resolução RE nº 4.038 de 30/10/2024, Seção 1 - Página 97</span><br>
+                                
+                                <span class="referencia">2. SARCLISA (isatuximabe) [bula do produto]. Sanofi Medley Farmacêutica Ltda. 2024.</span><br>
+  
+                                <span class="referencia">3. Facon T et al.; IMROZ Study Group. Isatuximab, Bortezomib, Lenalidomide, and Dexamethasone for Multiple Myeloma. N Engl J Med. 2024 Jun  </span><br>
+                                <span class="referencia" style="margin-left: 8px; display: inline-block;">3. doi: 10.1056/NEJMoa2400712.</span> <br>
+
+                                <span class="referencia">4. Martin T, Dimopoulos MA, Mikhael J, Yong K, Capra M, Facon T, et al. Isatuximab, carfilzomib, ad dexamethasone in relapsed multiple myeloma: </span>  <br>
+                                <span class="referencia" style="margin-left: 8px; display: inline-block;">updated results from IKEMA, a randomised Phase 3 study. Blood Cancer J. 2023;13(1):72.</span><br>
+
+                                <span class="referencia">5. Richardson PG, Perrot A, San-Miguel J, Beksac M, Spicka I, Leleu X, et al. Isatuximab plus pomalidomide and low-dose dexamethasone versus </span> <br>
+                                <span class="referencia" style="margin-left: 8px; display: inline-block;">pomalidomide and low-dose dexamethasone in patients with relapsed and refractory multiple myeloma (ICARIA-MM): follow-up analysis of a </span><br>
+                                <span class="referencia" style="margin-left: 8px; display: inline-block;">randomised, phase 3 study. Lancet Oncol. 2022;23(3):416-27.</span>
+  
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+       <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#F7F7F7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#F7F7F7;background-color:#F7F7F7;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#F7F7F7;background-color:#F7F7F7;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:top;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="center" class="divider" style="font-size:0px;word-break:break-word;">
+                                  <p style="border-top:solid 1px #C3C4C5;font-size:1px;margin:0px auto;width:100%;">
+                                  </p>
+                                  <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #C3C4C5;font-size:1px;margin:0px auto;width:532px;" role="presentation" width="532px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#F7F7F7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#F7F7F7;background-color:#F7F7F7;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#F7F7F7;background-color:#F7F7F7;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:280px;" ><![endif]-->
+                <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:middle;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="left" class="logo-footer" style="font-size:0px;padding:20px 18px 20px;word-break:break-word;">
+                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="width:129px;">
+                                          <img alt="Logo Conecta Sanofi" height="auto" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/1372cf45-2dc6-4f5a-bf4e-95bae2d88628.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="129" />
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td><td class="" style="vertical-align:middle;width:280px;" ><![endif]-->
+                <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:middle;padding:0px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="left" class="social-content" style="font-size:0px;padding:0px 0px 0px 62px;word-break:break-word;">
+                                  <!--[if mso | IE]><table align="left" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
+                                  <table align="left" border="0" cellpadding="0" cellspacing="0" role="presentation" style="float:none;display:inline-table;">
+                                    <tbody>
+                                      <tr class="icons-social">
+                                        <td style="padding:0px 6px 0px 0px;vertical-align:middle;">
+                                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:30px;">
+                                            <tbody>
+                                              <tr>
+                                                <td style="font-size:0;height:30px;vertical-align:middle;width:30px;">
+                                                  <a href="https://www.instagram.com/conectasanofi/" target="_blank">
+                                                    <img height="30" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/e245f7d4-8943-4fe9-b9b0-b5014f58ba56.png" style="border-radius:3px;display:block;" width="30" />
+                                                  </a>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <!--[if mso | IE]></td><td><![endif]-->
+                                  <table align="left" border="0" cellpadding="0" cellspacing="0" role="presentation" style="float:none;display:inline-table;">
+                                    <tbody>
+                                      <tr class="icons-social">
+                                        <td style="padding:0px 6px 0px 0px;vertical-align:middle;">
+                                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:30px;">
+                                            <tbody>
+                                              <tr>
+                                                <td style="font-size:0;height:30px;vertical-align:middle;width:30px;">
+                                                  <a href="https://www.facebook.com/sanoficonecta/" target="_blank">
+                                                    <img height="30" src="https://image.news.email.sanofi/lib/fe3d117175640479761772/m/1/0dd2a039-207e-4a64-b703-617820932d32.png" style="border-radius:3px;display:block;" width="30" />
+                                                  </a>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <!--[if mso | IE]></td></tr></table><![endif]-->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#F7F7F7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#F7F7F7;background-color:#F7F7F7;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#F7F7F7;background-color:#F7F7F7;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;">
+                  <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:top;width:280px;" ><![endif]-->
+                  <div class="mj-column-per-50 mj-outlook-group-fix footer-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:50%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="border:0px;vertical-align:top;padding:10px 18px;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td align="left" style="font-size:0px;padding:0px;word-break:break-word;">
+                                    <div style="font-family:Arial, sans-serif;font-size:13px;line-height:21px;text-align:left;color:#3B3D3E;">Avenida das Nações Unidas,14401 <br /> Condomínio Parque da Cidade, <br /> Torre Sucupira <br /> São Paulo, SP 04794-000</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--[if mso | IE]></td><td style="vertical-align:top;width:280px;" ><![endif]-->
+                  <div class="mj-column-per-50 mj-outlook-group-fix footer-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:50%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="border:0px;vertical-align:top;padding:10px 18px;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td align="left" style="font-size:0px;padding:0px 0px 0px 46px;word-break:break-word;">
+                                    <div style="font-family:Arial, sans-serif;font-size:13px;line-height:21px;text-align:left;color:#3B3D3E;">SAC: 0800 703 0014 <br /> Segunda a Sexta, das 8h às 18h.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--[if mso | IE]></td></tr></table><![endif]-->
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#F7F7F7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#F7F7F7;background-color:#F7F7F7;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#F7F7F7;background-color:#F7F7F7;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="footer-column-outlook" style="vertical-align:top;width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix footer-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td style="border:0px;vertical-align:top;padding:50px 18px 6px;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                            <tbody>
+                              <tr>
+                                <td align="left" style="font-size:0px;padding:0px;word-break:break-word;">
+                                  <div style="font-family:Arial, sans-serif;font-size:13px;line-height:21px;text-align:left;color:#000000;"><a href="%25@%20include%20view='snfiBraUnsubLinkInternalLink'%20%25" target="_blank" style="color: #3b3d3e">Cancelar Inscrição</a></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#F7F7F7" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div style="background:#F7F7F7;background-color:#F7F7F7;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#F7F7F7;background-color:#F7F7F7;width:100%;">
+          <tbody>
+            <tr>
+              <td style="border:0px;direction:ltr;font-size:0px;padding:0px 20px 40px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:560px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;">
+                  <!--[if mso | IE]><table border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td style="vertical-align:top;width:280px;" ><![endif]-->
+                  <div class="mj-column-per-50 mj-outlook-group-fix footer-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:50%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="border:0px;vertical-align:top;padding:0px 18px;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td align="left" style="font-size:0px;padding:0px;word-break:break-word;">
+                                    <div style="font-family:Arial, sans-serif;font-size:13px;line-height:21px;text-align:left;color:#000000;"><a href="https://www.sanoficonecta.com.br/termos-e-condicoes-de-uso" target="_blank" style="color: #3b3d3e">Termos legais</a></div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--[if mso | IE]></td><td style="vertical-align:top;width:280px;" ><![endif]-->
+                  <div class="mj-column-per-50 mj-outlook-group-fix footer-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:50%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="border:0px;vertical-align:top;padding:0px 18px;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td align="right" class="text-footer-right" style="font-size:0px;padding:0px 8px 0px 0px;word-break:break-word;">
+                                    <div style="font-family:Arial, sans-serif;font-size:12px;line-height:21px;text-align:right;color:#3B3D3E;"><b>MAT-BR-2404497 - OUT/2024</b></div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--[if mso | IE]></td></tr></table><![endif]-->
+                </div>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    </div>
+  </body>
+
+</html>
